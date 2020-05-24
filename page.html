@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" href="assets/css/CareerProgressGraph.css">
+</head>
+<body>
+
+<script>
+    // Define the region for the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 50};
+    var width = 150;
+    var height = 1000;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
+    // The container for the mouse-over text
+    var div = d3.select("body").append("div")	
+        .attr("class", "tooltip")				
+        .style("opacity", 0);
+
+    // A simple function to determine the color for lines and circles
+    function ColorGraph(row) {
+        if (row.Category === "Personal") {
+            return "ghostwhite";
+        } else if (row.Category === "Education") {
+            return "dodgerblue";
+        } else if (row.Institution === "Microsoft") {
+            return "mediumturquoise";
+        } else if (row.Institution === "Beyondsoft") {
+            return "salmon";
+        } else if (row.Institution === "USDA") {
+            return "forestgreen";
+        }
+    }
+
+    // Read in the data and make the graph
+    d3.csv("assets/data/data.csv", function(row) {
+        // Handle missing EndDate
+        if (row.EndDate === ""){
+            var end = new Date();
+        } else {
+            var end = new Date(row.EndDate);
+        }
+
+        return {
+            StartDate: new Date(row.StartDate),
+            EndDate: end,
+            Category: row.Category,
+            Institution: row.Institution,
+            ShortDescription: row.ShortDescription
+        };
+        
+    }).then(function(data) {
+        console.log();
+        // Define and create the y-axis
+        var y = d3.scaleTime()
+            .domain([d3.min(data.map(function(row) {return row.StartDate; } )), new Date()])
+            .range([height - margin.top, margin.bottom]);
+        svg.append("g")
+            .attr("class", "axis")
+            .call(d3.axisLeft(y))
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        
+        // Define the x-scales
+        var x = d3.scalePoint()
+            .domain(d3.map(data, function(d){return d.Category;}).keys())
+            .range([margin.left + 10, width - margin.right]);
+
+        // Create the line between the start and end dates
+        svg.selectAll("myline")
+            .data(data)
+            .enter()
+            .append("line")
+            .attr("x1", function(d) { return x(d.Category); })
+            .attr("x2", function(d) { return x(d.Category); })
+            .attr("y1", function(d) { return y(d.StartDate); })
+            .attr("y2", function(d) { return y(d.EndDate); })
+            .style("stroke", ColorGraph);
+
+        // Create the circles that indicate a major event
+        svg.selectAll("mycircle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", function(d) { return d.Institution; } )
+            .attr("cx", function(d) { return x(d.Category); } )
+            .attr("cy", function(d) { return y(d.StartDate); })
+            .attr("r", "4")
+            .style("fill", ColorGraph)
+            .on("mouseover", function(d) {		
+                div.transition()		
+                    .style("opacity", 0.9);		
+                div.html(d.StartDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long' }) + "<br/><br/>"  + d.ShortDescription)
+                    .style("left", d3.event.pageX + "px")		
+                    .style("top", d3.event.pageY + "px");	
+                })				
+            .on("mouseout", function(d) {		
+                div.transition()		
+                    .duration(500)		
+                    .style("opacity", 0);	
+            });
+
+    });
+
+
+        
+
+        
+        
+
+        
+
+
+
+        
+    
+    
+</script>
+</body>
+</html>

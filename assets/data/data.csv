@@ -1,0 +1,12 @@
+StartDate,EndDate,Category,Institution,ShortDescription
+1987-09-09,1987-09-09,Personal,,"Eric is born"
+2006-07-01,2009-12-31,Education,University of Washington,"Started attending University of Washington<br/>Went on to receive a B.S. in mathematics and economics; and a B.A. in philosophy."
+2012-05-01,2015-07-31,Education,Texas A&M,"Started attending Texas A&M University.<br/>Went on to receive an M.S. in Statistics."
+2016-08-01,,Education,Georgia Tech,"Started attending Georgia Institute of Technology.<br/>Currently working towards an M.S. in Computer Science."
+2010-11-01,2015-12-31,Employment,USDA,"Started working for the USDA as an Agricultural Statistician."
+2016-01-01,2017-02-28,Employment,Beyondsoft,"Started working for Beyondsoft as a Consultant."
+2017-03-01,2017-08-15,Employment,Beyondsoft,"Promoted to Lead Technical Analyst."
+2017-08-16,2018-03-15,Employment,Beyondsoft,"Promoted to Lead Data Scientist."
+2018-03-16,2018-07-15,Employment,Microsoft,"Started working for Microsoft as a Software Engineer II."
+2018-07-16,2019-06-15,Employment,Microsoft,"Switched role to Service Engineer II."
+2019-06-15,,Employment,Microsoft,"Switched back to being a Software Engineer II."

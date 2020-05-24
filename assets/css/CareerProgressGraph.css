@@ -1,0 +1,21 @@
+
+circle {
+    stroke: black;
+}
+
+line {
+    stroke: 1px;
+}
+
+div.tooltip {	
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: lightgray;
+    border: 1px solid black;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
